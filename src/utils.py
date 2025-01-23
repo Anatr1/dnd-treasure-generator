@@ -28,7 +28,6 @@ def roll_dice(n, d):
     return sum([roll_d(d) for _ in range(n)])
 
 def parse_money_line(line):
-    print(line)
     # Example line format:
     # 31–60	–	6d6 x 10 (210)	–	2d6 x 10 (70)	–
     copper = 0
@@ -42,41 +41,36 @@ def parse_money_line(line):
     
     # Parse copper
     if columns[1] != "–":
-        print(columns[1])
         if "x" in columns[1]:
-            copper = roll_dice(*map(int, columns[1].split("d")[0].split(" x ")))
+            copper = roll_dice(int(columns[1].split("d")[0]), int(columns[1].split("d")[1].split(" ")[0])) * int(columns[1].split("x")[1].split(" ")[1])
         else:
             copper = roll_dice(int(columns[1].split("d")[0]), int(columns[1].split("d")[1].split(" ")[0]))
         
     # Parse silver
     if columns[2] != "–":
-        print(columns[2])
         if "x" in columns[2]:
-            silver = roll_dice(*map(int, columns[2].split("d")[0].split(" x ")))
+            silver = roll_dice(int(columns[2].split("d")[0]), int(columns[2].split("d")[1].split(" ")[0])) * int(columns[2].split("x")[1].split(" ")[1])
         else:
             silver = roll_dice(int(columns[2].split("d")[0]), int(columns[2].split("d")[1].split(" ")[0]))
             
     # Parse electrum
     if columns[3] != "–":
-        print(columns[3])
         if "x" in columns[3]:
-            electrum = roll_dice(*map(int, columns[3].split("d")[0].split(" x ")))
+            electrum = roll_dice(int(columns[3].split("d")[0]), int(columns[3].split("d")[1].split(" ")[0])) * int(columns[3].split("x")[1].split(" ")[1])
         else:
             electrum = roll_dice(int(columns[3].split("d")[0]), int(columns[3].split("d")[1].split(" ")[0]))
         
     # Parse gold
     if columns[4] != "–":
-        print(columns[4])
         if "x" in columns[4]:
-            gold = roll_dice(*map(int, columns[4].split("d")[0].split(" x ")))
+            gold = roll_dice(int(columns[4].split("d")[0]), int(columns[4].split("d")[1].split(" ")[0])) * int(columns[4].split("x")[1].split(" ")[1])
         else:
             gold = roll_dice(int(columns[4].split("d")[0]), int(columns[4].split("d")[1].split(" ")[0]))
         
     # Parse platinum
     if columns[5] != "–" and columns[5] != "–\n":
-        print(columns[5])
         if "x" in columns[5]:
-            platinum = roll_dice(*map(int, columns[5].split("d")[0].split(" x ")))
+            platinum = roll_dice(int(columns[5].split("d")[0]), int(columns[5].split("d")[1].split(" ")[0])) * int(columns[5].split("x")[1].split(" ")[1])
         else:
             platinum = roll_dice(int(columns[5].split("d")[0]), int(columns[5].split("d")[1].split(" ")[0]))
         
