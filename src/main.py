@@ -35,7 +35,7 @@ def generate_single_treasure(cr, save_to_file=False):
                 print(f"Platinum: {platinum}")
                 
                 if save_to_file:
-                    with open("../generated_treasures.txt", "wa") as f:
+                    with open("../generated_treasures.txt", "a") as f:
                         now = time.strftime("%c")
                         f.write(f"Treasure generated on: {now} from a single treasure table of CR {cr}\n")
                         f.write(f"\tCopper: {copper}\n")
@@ -43,7 +43,51 @@ def generate_single_treasure(cr, save_to_file=False):
                         f.write(f"\tElectrum: {electrum}\n")
                         f.write(f"\tGold: {gold}\n")
                         f.write(f"\tPlatinum: {platinum}\n")
+                        
+                break
         
+
+def generate_hoard(cr, save_to_file=False):
+    print("Hoard")
+    if cr <= 4:
+        table = "0_4"
+    elif cr <= 10:
+        table = "5_10"
+    elif cr <= 16:
+        table = "11_16"
+    else:
+        table = "17+"
+        
+    # Read the file
+    with open(f"../tables/treasure_hoard_{table}.txt") as f:
+        lines = f.readlines()
+        copper, silver, electrum, gold, platinum = utils.parse_money_line(lines[0])
+        roll = utils.roll_d100()
+        print(f"Rolled: {roll}")
+        for line in lines[2:]:
+            # Parse first column
+            min_roll = int(line.split("\t")[0].split("–")[0])
+            max_roll = int(line.split("\t")[0].split("–")[1])
+            if roll >= min_roll and roll <= max_roll:                
+                print(f"Copper: {copper}")
+                print(f"Silver: {silver}")
+                print(f"Electrum: {electrum}")
+                print(f"Gold: {gold}")
+                print(f"Platinum: {platinum}")
+                
+                print(line)
+                
+                if save_to_file:
+                    with open("../generated_treasures.txt", "a") as f:
+                        now = time.strftime("%c")
+                        f.write(f"Treasure generated on: {now} from a hoard table of CR {cr}\n")
+                        f.write(f"\tCopper: {copper}\n")
+                        f.write(f"\tSilver: {silver}\n")
+                        f.write(f"\tElectrum: {electrum}\n")
+                        f.write(f"\tGold: {gold}\n")
+                        f.write(f"\tPlatinum: {platinum}\n")
+            
+                break
 
 def main():
     print("Enter challenge rating: ")
@@ -63,15 +107,10 @@ def main():
         treasure_type = input()
         
     if treasure_type == "s":
-        generate_single_treasure(cr)
-    #else:
-        #generate_hoard(cr)
+        generate_single_treasure(cr, save_to_file=True)
+    else:
+        generate_hoard(cr)
         
-
-
-
-
-
 
 
 if __name__ == "__main__":
