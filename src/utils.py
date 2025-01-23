@@ -129,21 +129,10 @@ def parse_gems_or_art_objects_line(line):
         
     return (gems, art_objects)
 
-def parse_magic_items_line(line):
-    # Example line format:
-    # Roll 1d4 times on Magic Item Table B.\n    
-    magic_items = []
-    
-    if line == "–" or line == "–\n":
-        return magic_items
-    
-    times = roll_from_string(line.split(" ")[1])
-    if line.split(" ")[1] == "once":
-        table = line.split(" ")[6].split(".")[0]    
-    else:
-        table = line.split(" ")[7].split(".")[0]
-    
+def roll_on_magic_item_table(times, table):
     print(f"Rolling {times} times on table {table}")
+    
+    magic_items = []
     
     with open(f"../tables/table_{table}.txt") as f:
         lines = f.readlines()
@@ -184,5 +173,28 @@ def parse_magic_items_line(line):
                         magic_items[-1] = f"{magic_items[-1].split('(')[0].strip()} ({versions[0]})"
                                                 
                     break
-                
+        
+    return magic_items
+
+def parse_magic_items_line(line):
+    # Example line format:
+    # Roll 1d4 times on Magic Item Table B.\n    
+    magic_items = []
+    
+    if line == "–" or line == "–\n":
+        return magic_items
+    
+    times = roll_from_string(line.split(" ")[1])
+    if line.split(" ")[1] == "once":
+        table = line.split(" ")[6].split(".")[0]    
+    else:
+        table = line.split(" ")[7].split(".")[0]
+    
+    magic_items = roll_on_magic_item_table(times, table)
+    
+    if "and" in line:
+        times = roll_from_string(line.split("and")[1].split(" ")[1])
+        table = line.split(" ")[10].split(".")[0]
+        magic_items += roll_on_magic_item_table(times, table)
+    
     return magic_items
