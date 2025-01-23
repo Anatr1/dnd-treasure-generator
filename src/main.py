@@ -22,8 +22,13 @@ def generate_single_treasure(cr, save_to_file=False):
         print(f"Rolled: {roll}")
         for line in lines:
             # Parse first column
-            min_roll = int(line.split("\t")[0].split("–")[0])
-            max_roll = int(line.split("\t")[0].split("–")[1])
+            if "–" not in line:
+                min_roll = int(line.split("\t")[0])
+                max_roll = int(line.split("\t")[0])
+            else:
+                min_roll = int(line.split("\t")[0].split("–")[0])
+                max_roll = int(line.split("\t")[0].split("–")[1])
+                
             if roll >= min_roll and roll <= max_roll:
                 copper, silver, electrum, gold, platinum = utils.parse_money_line(line)
                 
@@ -65,8 +70,13 @@ def generate_hoard(cr, save_to_file=False):
         print(f"Rolled: {roll}")
         for line in lines[2:]:
             # Parse first column
-            min_roll = int(line.split("\t")[0].split("–")[0])
-            max_roll = int(line.split("\t")[0].split("–")[1])
+            if "–" not in line:
+                min_roll = int(line.split("\t")[0])
+                max_roll = int(line.split("\t")[0])
+            else:
+                min_roll = int(line.split("\t")[0].split("–")[0])
+                max_roll = int(line.split("\t")[0].split("–")[1])
+                
             if roll >= min_roll and roll <= max_roll:                
                 print(f"\tCopper: {copper}")
                 print(f"\tSilver: {silver}")
@@ -82,18 +92,30 @@ def generate_hoard(cr, save_to_file=False):
                 for art_object in art_objects:
                     print("\t" + art_object)
                     
-                print(line.split("\t"))
-                utils.parse_magic_items_line(line.split("\t")[2])
+                magic_items = utils.parse_magic_items_line(line.split("\t")[2])
+                print("Magic items:")
+                for magic_item in magic_items:
+                    print("\t" + magic_item)
                 
                 if save_to_file:
                     with open("../generated_treasures.txt", "a") as f:
                         now = time.strftime("%c")
                         f.write(f"Treasure generated on: {now} from a hoard table of CR {cr}\n")
+                        f.write(f"Money:\n")
                         f.write(f"\tCopper: {copper}\n")
                         f.write(f"\tSilver: {silver}\n")
                         f.write(f"\tElectrum: {electrum}\n")
                         f.write(f"\tGold: {gold}\n")
-                        f.write(f"\tPlatinum: {platinum}\n")
+                        f.write(f"\tPlatinum: {platinum}\n\n")
+                        f.write("Gems:\n")
+                        for gem in gems:
+                            f.write(f"\t{gem}\n")
+                        f.write("\nArt objects:\n")
+                        for art_object in art_objects:
+                            f.write(f"\t{art_object}\n")
+                        f.write("\nMagic items:\n")
+                        for magic_item in magic_items:
+                            f.write(f"\t{magic_item}\n")
             
                 break
 

@@ -131,12 +131,58 @@ def parse_gems_or_art_objects_line(line):
 
 def parse_magic_items_line(line):
     # Example line format:
-    # Roll 1d4 times on Magic Item Table B.\n
+    # Roll 1d4 times on Magic Item Table B.\n    
+    magic_items = []
     
     if line == "–" or line == "–\n":
-        return []
+        return magic_items
     
     times = roll_from_string(line.split(" ")[1])
-    table = line.split(" ")[7].split(".")[0]
+    if line.split(" ")[1] == "once":
+        table = line.split(" ")[6].split(".")[0]    
+    else:
+        table = line.split(" ")[7].split(".")[0]
     
     print(f"Rolling {times} times on table {table}")
+    
+    with open(f"../tables/table_{table}.txt") as f:
+        lines = f.readlines()
+        for _ in range(times):
+            roll = roll_d100()
+            print(f"Rolled: {roll}")
+            for line in lines:
+                if line.split("\t")[0] == "-":
+                    continue
+                if "–" not in line:
+                    min_roll = int(line.split("\t")[0])
+                    max_roll = int(line.split("\t")[0])
+                else:
+                    min_roll = int(line.split("\t")[0].split("–")[0])
+                    max_roll = int(line.split("\t")[0].split("–")[1])
+                    
+                if roll >= min_roll and roll <= max_roll:
+                    magic_items.append(line.split("\t")[1].strip())
+                    if "(roll d" in line:
+                        # We got one of those pesky "roll dX" ones
+                        versions = []
+                        # Get dice to roll
+                        dice = line.split("roll d")[1].split(" )")[0].split(")")[0]
+                        roll = roll_d(int(dice))
+                        # Read all the next lines starting with "-"
+                        for subline in lines[lines.index(line):]:
+                            if subline.split("\t")[0] == "-":
+                                if "–" not in subline:
+                                    min_roll = int(subline.split("\t")[1].split(":")[0])
+                                    max_roll = int(subline.split("\t")[1].split(":")[0])
+                                else:
+                                    min_roll = int(subline.split("\t")[1].split("–")[0])
+                                    max_roll = int(subline.split("\t")[1].split("–")[1].split(":")[0])
+                                    
+                                if roll >= min_roll and roll <= max_roll:
+                                    versions.append(subline.split("\t")[1].split(":")[1].strip())
+                                    
+                        magic_items[-1] = f"{magic_items[-1].split('(')[0].strip()} ({versions[0]})"
+                                                
+                    break
+                
+    return magic_items

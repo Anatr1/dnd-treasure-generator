@@ -16,8 +16,8 @@
 46–47	Rod of the pact keeper, + 1
 48–49	Slippers of spider climbing
 50–51	Staff of the adder
-52-53	Staff of the python
-54-55	Sword of vengeance
+52–53	Staff of the python
+54–55	Sword of vengeance
 56–57	Trident of fish command
 58–59	Wand of magic missiles
 60–61	Wand of the war mage, + 1

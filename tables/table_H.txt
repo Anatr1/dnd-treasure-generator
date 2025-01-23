@@ -16,8 +16,8 @@
 39–40	Staff of fire
 41–42	Staff of frost
 43–44	Staff of power
-45-46	Staff of striking
-47-48	Staff of thunder and lightning
+45–46	Staff of striking
+47–48	Staff of thunder and lightning
 49–50	Sword of sharpnes
 51–52	Wand of polymorph
 53–54	Wand of the war mage, + 3
