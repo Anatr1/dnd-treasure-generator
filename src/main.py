@@ -1,8 +1,7 @@
 import os
 import sys
 import utils
-import time
-
+import time        
 
 
 def generate_single_treasure(cr, save_to_file=False):
@@ -28,11 +27,11 @@ def generate_single_treasure(cr, save_to_file=False):
             if roll >= min_roll and roll <= max_roll:
                 copper, silver, electrum, gold, platinum = utils.parse_money_line(line)
                 
-                print(f"Copper: {copper}")
-                print(f"Silver: {silver}")
-                print(f"Electrum: {electrum}")
-                print(f"Gold: {gold}")
-                print(f"Platinum: {platinum}")
+                print(f"\tCopper: {copper}")
+                print(f"\tSilver: {silver}")
+                print(f"\tElectrum: {electrum}")
+                print(f"\tGold: {gold}")
+                print(f"\tPlatinum: {platinum}")
                 
                 if save_to_file:
                     with open("../generated_treasures.txt", "a") as f:
@@ -69,13 +68,22 @@ def generate_hoard(cr, save_to_file=False):
             min_roll = int(line.split("\t")[0].split("–")[0])
             max_roll = int(line.split("\t")[0].split("–")[1])
             if roll >= min_roll and roll <= max_roll:                
-                print(f"Copper: {copper}")
-                print(f"Silver: {silver}")
-                print(f"Electrum: {electrum}")
-                print(f"Gold: {gold}")
-                print(f"Platinum: {platinum}")
+                print(f"\tCopper: {copper}")
+                print(f"\tSilver: {silver}")
+                print(f"\tElectrum: {electrum}")
+                print(f"\tGold: {gold}")
+                print(f"\tPlatinum: {platinum}")
                 
-                print(line)
+                gems, art_objects = utils.parse_gems_or_art_objects_line(line.split("\t")[1])
+                print("Gems:")
+                for gem in gems:
+                    print("\t" + gem)
+                print("Art objects:")
+                for art_object in art_objects:
+                    print("\t" + art_object)
+                    
+                print(line.split("\t"))
+                utils.parse_magic_items_line(line.split("\t")[2])
                 
                 if save_to_file:
                     with open("../generated_treasures.txt", "a") as f:
