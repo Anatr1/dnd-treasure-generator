@@ -22,7 +22,7 @@
 58–59	Wand of magic missiles
 60–61	Wand of the war mage, + 1
 62–63	Wand of web
-64-65	Weapon of warning
+64–65	Weapon of warning
 66	Adamantine armor (chain mail)
 67	Adamantine armor (chain shirt)
 68	Adamantine armor (scale mail)

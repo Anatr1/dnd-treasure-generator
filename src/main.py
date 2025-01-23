@@ -139,7 +139,7 @@ def main():
     if treasure_type == "s":
         generate_single_treasure(cr, save_to_file=True)
     else:
-        generate_hoard(cr)
+        generate_hoard(cr, save_to_file=True)
         
 
 

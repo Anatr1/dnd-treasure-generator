@@ -32,4 +32,4 @@ d100	Gems or Art Objects	Magic Items
 93–94	2d4 (5) 250 gp art objects	Roll once on Magic Item Table I.
 95–96	3d6 (10) 500 gp gems	Roll once on Magic Item Table I.
 97–98	3d6 (10) 1000 gp gems	Roll once on Magic Item Table I.
-99–00	3d6 (10) 1000 gp gems	Roll once on Magic Item Table I.
+99–100	3d6 (10) 1000 gp gems	Roll once on Magic Item Table I.

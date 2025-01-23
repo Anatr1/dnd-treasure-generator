@@ -177,6 +177,7 @@ def roll_on_magic_item_table(times, table):
     return magic_items
 
 def parse_magic_items_line(line):
+    print(line)
     # Example line format:
     # Roll 1d4 times on Magic Item Table B.\n    
     magic_items = []
@@ -185,16 +186,13 @@ def parse_magic_items_line(line):
         return magic_items
     
     times = roll_from_string(line.split(" ")[1])
-    if line.split(" ")[1] == "once":
-        table = line.split(" ")[6].split(".")[0]    
-    else:
-        table = line.split(" ")[7].split(".")[0]
+    table = line.split("Table ")[1].split(" ")[0][0]
     
     magic_items = roll_on_magic_item_table(times, table)
     
     if "and" in line:
-        times = roll_from_string(line.split("and")[1].split(" ")[1])
-        table = line.split(" ")[10].split(".")[0]
+        times = roll_from_string(line.split("and")[1].strip().split(" ")[0])
+        table = line.split("Table")[2].split(".")[0].strip()
         magic_items += roll_on_magic_item_table(times, table)
     
     return magic_items
